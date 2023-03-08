@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新最热 AAO</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #player {
+            width: min(80vw, 800px);
+            height: calc(min(80vw, 800px) / 16 * 9);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>最新最热 AAO - #39</h1>
+    <p>最新视频：<a id="link" href="https://www.bilibili.com/video/av440412796" target="_blank"
+            rel="noopener noreferer">av440412796</a> </p>
+    <iframe id="player" title="Cotton-Candy AAO"
+        src="https://www.bilibili.com/blackboard/newplayer.html?playlist=true&playlist_order=sequential&musth5=1&noEndPanel=1&crossDomain=1&autoplay=0&aid=440412796&page=1"
+        frameborder="0"></iframe>
+    <script>
+        function updateTitle(item) {
+            document.querySelector('#link').innerHTML = item.data.title
+        }
+    </script>
+    <script src="https://api.bilibili.com/x/web-interface/view?aid=440412796&jsonp=jsonp&callback=updateTitle"></script>
+</body>
+
+</html>
