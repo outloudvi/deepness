@@ -1,0 +1,40 @@
+name: "Update on new AAO"
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: read
+  contents: write
+
+jobs:
+  update_page:
+    name: Update the page
+    if: "(contains(github.event.comment.author_association, 'OWNER') && (github.event.issue.number == 1))"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out current commit
+
+      - uses: actions/github-script@v6
+        id: getvid
+        name: Get the video ID
+        with:
+          script: |
+            const body = '${{ github.event.comment.body }}'
+            return body.match(/\/new av([0-9]+)/)[1]
+          result-encoding: string
+          url: ${{ github.event.comment.body }}
+          target: assets
+          auto-match: true
+
+      - name: Update the repo
+        run: |
+          bash build.sh ${{ steps.getvid.outputs.result }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ github.token }}
+          branch: ${{ github.ref }}
